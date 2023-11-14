@@ -10,7 +10,7 @@ phases:
     commands:
       - echo $ASSUME_ROLE_ARN
       - echo $ROLE_SESSION_NAME
-      - echo $ENVIRONMENT
+      - echo DEV
       - TEMP_ROLE=`aws sts assume-role --role-arn $ASSUME_ROLE_ARN --role-session-name $ROLE_SESSION_NAME`
       - export TEMP_ROLE
       - export AWS_ACCESS_KEY_ID=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.AccessKeyId')
@@ -19,4 +19,4 @@ phases:
   build:
     commands:
       - npm i -g serverless
-      - sls deploy --stage $ENVIRONMENT
+      - sls deploy --stage DEV
