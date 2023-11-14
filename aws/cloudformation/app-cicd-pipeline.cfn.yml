@@ -146,25 +146,6 @@ Resources:
         #     Id: !Ref CICDKMSKey
         #     Type:  KMS
       Stages:
-        - Name: Source
-          Actions:
-            - Name: Source
-              ActionTypeId:
-                Category: Source
-                Owner: ThirdParty
-                Version: 1
-                Provider: GitHub
-              Configuration:
-                Owner: !Ref GitHubUser
-                Repo: !Ref GitHubRepo
-                Branch: !Ref GitHubBranch
-                OAuthToken: "{{resolve:secretsmanager:github/oauth-token:SecretString:oauth-token}}"
-                PollForSourceChanges: false
-              OutputArtifacts:
-                - Name: Source
-              RunOrder: 1
-              Namespace: SourceVariables
-        - Name: Build_and_Test
           Actions:
             - Name: Build_and_Test
               ActionTypeId:
@@ -191,20 +172,19 @@ Resources:
               Configuration:
                 ProjectName: !Ref CodeBuildDeployProject
                 PrimarySource: Source
-                EnvironmentVariables: 
-                  !Sub 
-                  - "[
-                      {\"name\": \"ASSUME_ROLE_ARN\", \"type\": \"PLAINTEXT\", \"value\": \"arn:aws:iam::${AccountId}:role/CICDCrossAccountRole\"},
-                      {\"name\": \"ENVIRONMENT\", \"type\": \"PLAINTEXT\", \"value\": \"${Environment}\"}
-                    ]"
-                  - AccountId: !Ref DevAccountId
-                    Environment: dev
+                EnvironmentVariables:
+                  - name: ASSUME_ROLE_ARN
+                    type: PLAINTEXT
+                    value: !Sub arn:aws:iam::${AccountId}:role/CICDCrossAccountRole
+                  - name: ENVIRONMENT
+                    type: PLAINTEXT
+                    value: !Ref Environment
               InputArtifacts:
                 - Name: Source
               OutputArtifacts:
                 - Name: DEV_Templates
-              RunOrder: 1
-        - Name: TEST
+              RunOrder: 1  
+
           Actions:
             - Name: TEST_Manual_Approval        
               ActionTypeId: 
@@ -239,7 +219,7 @@ Resources:
               OutputArtifacts:
                 - Name: TEST_Templates
               RunOrder: 2
-        - Name: PROD
+
           Actions:
             - Name: PROD_Manual_Approval        
               ActionTypeId: 
