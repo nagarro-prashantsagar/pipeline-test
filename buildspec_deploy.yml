@@ -19,4 +19,4 @@ phases:
   build:
     commands:
       - npm i -g serverless
-      - sls deploy --stage $ENVIRONMENT
+      - sls deploy --stage Test
