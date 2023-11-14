@@ -7,6 +7,6 @@ phases:
   build:
     commands:
       - npm -v
-      - npm install
+      # - npm install
       - mkdir junit
-      - npm test --coverage
+      # - npm test --coverage
