@@ -21,3 +21,4 @@ phases:
     commands:
       - npm i -g serverless
       - sls deploy --stage $ENVIRONMENT
+
