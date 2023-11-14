@@ -10,7 +10,7 @@ phases:
     commands:
       - echo arn:aws:iam::701959343654:role/CodePipelineServiceRole
       - echo $ROLE_SESSION_NAME
-      - echo Test
+      # - echo Test
       - TEMP_ROLE=`aws sts assume-role --role-arn arn:aws:iam::701959343654:role/CodePipelineServiceRole --role-session-name $ROLE_SESSION_NAME`
       - export TEMP_ROLE
       - export AWS_ACCESS_KEY_ID=$(echo "${TEMP_ROLE}" | jq -r '.Credentials.AccessKeyId')
@@ -19,4 +19,4 @@ phases:
   build:
     commands:
       - npm i -g serverless
-      - sls deploy --stage Test
+      # - sls deploy --stage Test
