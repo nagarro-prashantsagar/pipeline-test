@@ -7,7 +7,7 @@ env:
 phases:
   install:
     runtime-versions:
-      nodejs: 18
+      nodejs: 16
     commands:
       - echo arn:aws:iam::701959343654:role/CodePipelineServiceRole
       - echo $ROLE_SESSION_NAME
