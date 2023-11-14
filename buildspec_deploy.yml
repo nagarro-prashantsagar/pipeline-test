@@ -2,13 +2,13 @@
 version: 0.2
 env:
   variables:
-    ROLE_SESSION_NAME: CICDCrossAccountRole
+    ROLE_SESSION_NAME: CodePipelineServiceRole
 phases:
   install:
     runtime-versions:
-      nodejs: 10
+      nodejs: 18
     commands:
-      - echo $ASSUME_ROLE_ARN
+      - echo arn:aws:iam::701959343654:role/CodePipelineServiceRole
       - echo $ROLE_SESSION_NAME
       - echo DEV
       - TEMP_ROLE=`aws sts assume-role --role-arn $ASSUME_ROLE_ARN --role-session-name $ROLE_SESSION_NAME`
@@ -19,4 +19,4 @@ phases:
   build:
     commands:
       - npm i -g serverless
-      - sls deploy --stage DEV
+      - sls deploy DEV
