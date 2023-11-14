@@ -2,7 +2,7 @@
 version: 0.2
 env:
   variables:
-    ROLE_SESSION_NAME: CICDCrossAccountRole
+    ROLE_SESSION_NAME: CodePipelineServiceRole
 phases:
   install:
     runtime-versions:
